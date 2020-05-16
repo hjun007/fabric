@@ -62,11 +62,14 @@ func GetDefault() bccsp.BCCSP {
 		logger.Debug("Before using BCCSP, please call InitFactories(). Falling back to bootBCCSP.")
 		bootBCCSPInitOnce.Do(func() {
 			var err error
-			f := &SWFactory{}
+			//f := &SWFactory{}
+			f := &GMFactory{}
 			bootBCCSP, err = f.Get(&FactoryOpts{
-				ProviderName: "SW",
+				//ProviderName: "SW",
+				ProviderName: "GM",
 				SwOpts: &SwOpts{
-					HashFamily: "SHA2",
+					//HashFamily: "SHA2",
+					HashFamily: "GMSM3",
 					SecLevel:   256,
 
 					Ephemeral: true,
