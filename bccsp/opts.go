@@ -57,6 +57,13 @@ const (
 	// SHA3_384
 	SHA3_384 = "SHA3_384"
 
+	// GMSM2
+	GMSM2 = "GMSM2"
+	// GMSM3
+	GMSM3 = "GMSM3"
+	// GMSM4
+	GMSM4 = "GMSM4"
+
 	// X509Certificate Label for X509 certificate related operation
 	X509Certificate = "X509Certificate"
 )
