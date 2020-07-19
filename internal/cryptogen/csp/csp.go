@@ -8,9 +8,12 @@ package csp
 import (
 	"crypto"
 	"crypto/ecdsa"
-	"crypto/elliptic"
-	"crypto/rand"
-	"crypto/x509"
+	//"crypto/x509"
+
+	//"crypto/ecdsa"
+	//"crypto/elliptic"
+	//"crypto/rand"
+	//"crypto/x509"
 	"encoding/asn1"
 	"encoding/pem"
 	"io"
@@ -21,12 +24,13 @@ import (
 	"strings"
 
 	"github.com/pkg/errors"
+	"github.com/tjfoc/gmsm/sm2"
 )
 
 // LoadPrivateKey loads a private key from a file in keystorePath.  It looks
 // for a file ending in "_sk" and expects a PEM-encoded PKCS8 EC private key.
-func LoadPrivateKey(keystorePath string) (*ecdsa.PrivateKey, error) {
-	var priv *ecdsa.PrivateKey
+func LoadPrivateKey(keystorePath string) (*sm2.PrivateKey, error) {
+	var priv *sm2.PrivateKey
 
 	walkFunc := func(path string, info os.FileInfo, pathErr error) error {
 
@@ -55,34 +59,34 @@ func LoadPrivateKey(keystorePath string) (*ecdsa.PrivateKey, error) {
 	return priv, err
 }
 
-func parsePrivateKeyPEM(rawKey []byte) (*ecdsa.PrivateKey, error) {
+func parsePrivateKeyPEM(rawKey []byte) (*sm2.PrivateKey, error) {
 	block, _ := pem.Decode(rawKey)
 	if block == nil {
 		return nil, errors.New("bytes are not PEM encoded")
 	}
 
-	key, err := x509.ParsePKCS8PrivateKey(block.Bytes)
+	key, err := sm2.ParsePKCS8PrivateKey(block.Bytes, nil)
 	if err != nil {
 		return nil, errors.WithMessage(err, "pem bytes are not PKCS8 encoded ")
 	}
 
-	priv, ok := key.(*ecdsa.PrivateKey)
-	if !ok {
-		return nil, errors.New("pem bytes do not contain an EC private key")
-	}
-	return priv, nil
+	//priv, ok := key.(*ecdsa.PrivateKey)
+	//if !ok {
+	//	return nil, errors.New("pem bytes do not contain an EC private key")
+	//}
+	return key, nil
 }
 
 // GeneratePrivateKey creates an EC private key using a P-256 curve and stores
 // it in keystorePath.
-func GeneratePrivateKey(keystorePath string) (*ecdsa.PrivateKey, error) {
+func GeneratePrivateKey(keystorePath string) (*sm2.PrivateKey, error) {
 
-	priv, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
+	priv, err := sm2.GenerateKey()
 	if err != nil {
 		return nil, errors.WithMessage(err, "failed to generate private key")
 	}
-
-	pkcs8Encoded, err := x509.MarshalPKCS8PrivateKey(priv)
+	//pkcs8Encoded, err := x509.MarshalPKCS8PrivateKey(priv)
+	pkcs8Encoded, err := sm2.MarshalSm2UnecryptedPrivateKey(priv)
 	if err != nil {
 		return nil, errors.WithMessage(err, "failed to marshal private key")
 	}
@@ -109,8 +113,16 @@ type ECDSASigner struct {
 	PrivateKey *ecdsa.PrivateKey
 }
 
+type SM2Signer struct {
+	PrivateKey *sm2.PrivateKey
+}
+
 // Public returns the ecdsa.PublicKey associated with PrivateKey.
 func (e *ECDSASigner) Public() crypto.PublicKey {
+	return &e.PrivateKey.PublicKey
+}
+
+func (e *SM2Signer) Public() crypto.PublicKey {
 	return &e.PrivateKey.PublicKey
 }
 
@@ -134,6 +146,18 @@ func (e *ECDSASigner) Sign(rand io.Reader, digest []byte, opts crypto.SignerOpts
 	return asn1.Marshal(sig)
 }
 
+func (e *SM2Signer) Sign(rand io.Reader, digest []byte, opts crypto.SignerOpts) ([]byte, error) {
+	r, s, err := sm2.Sign(e.PrivateKey, digest)
+	if err != nil {
+		return nil, err
+	}
+	sig := SM2Signature{
+		R: r,
+		S: s,
+	}
+	return asn1.Marshal(sig)
+}
+
 /**
 When using ECDSA, both (r,s) and (r, -s mod n) are valid signatures.  In order
 to protect against signature malleability attacks, Fabric normalizes all
@@ -153,5 +177,9 @@ func toLowS(key ecdsa.PublicKey, sig ECDSASignature) ECDSASignature {
 }
 
 type ECDSASignature struct {
+	R, S *big.Int
+}
+
+type SM2Signature struct {
 	R, S *big.Int
 }
