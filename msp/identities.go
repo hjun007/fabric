@@ -10,6 +10,8 @@ import (
 	"crypto"
 	"crypto/rand"
 	"crypto/x509"
+
+	//"crypto/x509"
 	"encoding/hex"
 	"encoding/pem"
 	"fmt"
@@ -21,6 +23,7 @@ import (
 	"github.com/hyperledger/fabric/bccsp"
 	"github.com/hyperledger/fabric/common/flogging"
 	"github.com/pkg/errors"
+	"github.com/tjfoc/gmsm/sm2"
 	"go.uber.org/zap/zapcore"
 )
 
@@ -31,7 +34,7 @@ type identity struct {
 	id *IdentityIdentifier
 
 	// cert contains the x.509 certificate that signs the public key of this instance
-	cert *x509.Certificate
+	cert *sm2.Certificate
 
 	// this is the public key of this instance
 	pk bccsp.Key
@@ -52,7 +55,7 @@ type identity struct {
 	validationErr error
 }
 
-func newIdentity(cert *x509.Certificate, pk bccsp.Key, msp *bccspmsp) (Identity, error) {
+func newIdentity(cert *sm2.Certificate, pk bccsp.Key, msp *bccspmsp) (Identity, error) {
 	if mspIdentityLogger.IsEnabledFor(zapcore.DebugLevel) {
 		mspIdentityLogger.Debugf("Creating identity instance for cert %s", certToPEM(cert))
 	}
@@ -233,7 +236,7 @@ type signingidentity struct {
 	signer crypto.Signer
 }
 
-func newSigningIdentity(cert *x509.Certificate, pk bccsp.Key, signer crypto.Signer, msp *bccspmsp) (SigningIdentity, error) {
+func newSigningIdentity(cert *sm2.Certificate, pk bccsp.Key, signer crypto.Signer, msp *bccspmsp) (SigningIdentity, error) {
 	//mspIdentityLogger.Infof("Creating signing identity instance for ID %s", id)
 	mspId, err := newIdentity(cert, pk, msp)
 	if err != nil {
