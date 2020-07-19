@@ -8,9 +8,10 @@ package chaincode
 
 import (
 	"context"
-	"crypto/tls"
 	"encoding/json"
 	"fmt"
+	//"crypto/tls"
+	tls "github.com/tjfoc/gmtls"
 	"io/ioutil"
 	"math"
 	"strings"

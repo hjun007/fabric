@@ -8,8 +8,9 @@ package common
 
 import (
 	"context"
-	"crypto/tls"
 	"fmt"
+	//"crypto/tls"
+	tls "github.com/tjfoc/gmtls"
 	"io/ioutil"
 	"os"
 	"strings"

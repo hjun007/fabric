@@ -2,7 +2,8 @@
 package fake
 
 import (
-	"crypto/x509"
+	//"crypto/x509"
+	"github.com/tjfoc/gmsm/sm2"
 	"sync"
 
 	"github.com/hyperledger/fabric/internal/pkg/peer/blocksprovider"
@@ -10,11 +11,11 @@ import (
 )
 
 type Dialer struct {
-	DialStub        func(string, *x509.CertPool) (*grpc.ClientConn, error)
+	DialStub        func(string, *sm2.CertPool) (*grpc.ClientConn, error)
 	dialMutex       sync.RWMutex
 	dialArgsForCall []struct {
 		arg1 string
-		arg2 *x509.CertPool
+		arg2 *sm2.CertPool
 	}
 	dialReturns struct {
 		result1 *grpc.ClientConn
@@ -28,12 +29,12 @@ type Dialer struct {
 	invocationsMutex sync.RWMutex
 }
 
-func (fake *Dialer) Dial(arg1 string, arg2 *x509.CertPool) (*grpc.ClientConn, error) {
+func (fake *Dialer) Dial(arg1 string, arg2 *sm2.CertPool) (*grpc.ClientConn, error) {
 	fake.dialMutex.Lock()
 	ret, specificReturn := fake.dialReturnsOnCall[len(fake.dialArgsForCall)]
 	fake.dialArgsForCall = append(fake.dialArgsForCall, struct {
 		arg1 string
-		arg2 *x509.CertPool
+		arg2 *sm2.CertPool
 	}{arg1, arg2})
 	fake.recordInvocation("Dial", []interface{}{arg1, arg2})
 	fake.dialMutex.Unlock()
@@ -53,13 +54,13 @@ func (fake *Dialer) DialCallCount() int {
 	return len(fake.dialArgsForCall)
 }
 
-func (fake *Dialer) DialCalls(stub func(string, *x509.CertPool) (*grpc.ClientConn, error)) {
+func (fake *Dialer) DialCalls(stub func(string, *sm2.CertPool) (*grpc.ClientConn, error)) {
 	fake.dialMutex.Lock()
 	defer fake.dialMutex.Unlock()
 	fake.DialStub = stub
 }
 
-func (fake *Dialer) DialArgsForCall(i int) (string, *x509.CertPool) {
+func (fake *Dialer) DialArgsForCall(i int) (string, *sm2.CertPool) {
 	fake.dialMutex.RLock()
 	defer fake.dialMutex.RUnlock()
 	argsForCall := fake.dialArgsForCall[i]
