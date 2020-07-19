@@ -21,7 +21,7 @@ package factory
 func GetDefaultOpts() *FactoryOpts {
 	return &FactoryOpts{
 		//ProviderName: "SW",
-		ProviderName: "GM"
+		ProviderName: "GM",
 		SwOpts: &SwOpts{
 			//HashFamily: "SHA2",
 			HashFamily: "GMSM3",

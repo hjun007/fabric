@@ -8,11 +8,13 @@ package comm
 
 import (
 	"context"
-	"crypto/tls"
 	"errors"
+	//"crypto/tls"
+	tls "github.com/tjfoc/gmtls"
 	"net"
 
 	"github.com/hyperledger/fabric/common/flogging"
+	"github.com/tjfoc/gmtls/gmcredentials"
 	"google.golang.org/grpc/credentials"
 )
 
@@ -64,7 +66,7 @@ func (sc *serverCreds) ServerHandshake(rawConn net.Conn) (net.Conn, credentials.
 		}
 		return nil, nil, err
 	}
-	return conn, credentials.TLSInfo{State: conn.ConnectionState()}, nil
+	return conn, gmcredentials.TLSInfo{State: conn.ConnectionState()}, nil
 }
 
 // Info provides the ProtocolInfo of this TransportCredentials.
@@ -100,8 +102,8 @@ func (dtc *DynamicClientCredentials) latestConfig() *tls.Config {
 	return tlsConfigCopy
 }
 
-func (dtc *DynamicClientCredentials) ClientHandshake(ctx context.Context, authority string, rawConn net.Conn) (net.Conn, credentials.AuthInfo, error) {
-	return credentials.NewTLS(dtc.latestConfig()).ClientHandshake(ctx, authority, rawConn)
+func (dtc *DynamicClientCredentials) ClientHandshake(ctx context.Context, authority string, rawConn net.Conn) (net.Conn, gmcredentials.AuthInfo, error) {
+	return gmcredentials.NewTLS(dtc.latestConfig()).ClientHandshake(ctx, authority, rawConn)
 }
 
 func (dtc *DynamicClientCredentials) ServerHandshake(rawConn net.Conn) (net.Conn, credentials.AuthInfo, error) {
@@ -109,11 +111,12 @@ func (dtc *DynamicClientCredentials) ServerHandshake(rawConn net.Conn) (net.Conn
 }
 
 func (dtc *DynamicClientCredentials) Info() credentials.ProtocolInfo {
-	return credentials.NewTLS(dtc.latestConfig()).Info()
+	return gmcredentials.NewTLS(dtc.latestConfig()).Info()
+
 }
 
 func (dtc *DynamicClientCredentials) Clone() credentials.TransportCredentials {
-	return credentials.NewTLS(dtc.latestConfig())
+	return gmcredentials.NewTLS(dtc.latestConfig())
 }
 
 func (dtc *DynamicClientCredentials) OverrideServerName(name string) error {

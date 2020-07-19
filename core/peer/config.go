@@ -20,7 +20,7 @@ SPDX-License-Identifier: Apache-2.0
 package peer
 
 import (
-	"crypto/tls"
+	//"crypto/tls"
 	"fmt"
 	"io/ioutil"
 	"net"
@@ -32,6 +32,7 @@ import (
 	"github.com/hyperledger/fabric/core/config"
 	"github.com/pkg/errors"
 	"github.com/spf13/viper"
+	tls "github.com/tjfoc/gmtls"
 )
 
 // ExternalBuilder represents the configuration structure of

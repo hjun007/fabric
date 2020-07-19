@@ -8,7 +8,7 @@ package operations
 
 import (
 	"context"
-	"crypto/tls"
+	//"crypto/tls"
 	"net"
 	"net/http"
 	"os"
@@ -28,6 +28,7 @@ import (
 	"github.com/hyperledger/fabric/common/util"
 	"github.com/hyperledger/fabric/core/middleware"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
+	tls "github.com/tjfoc/gmtls"
 )
 
 //go:generate counterfeiter -o fakes/logger.go -fake-name Logger . Logger

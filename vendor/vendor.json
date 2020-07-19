@@ -1,0 +1,43 @@
+{
+	"comment": "",
+	"ignore": "",
+	"package": [
+		{
+			"checksumSHA1": "m+wUPeGbbN4WXZUXBd1pEa/4sw0=",
+			"path": "github.com/tjfoc/gmsm/sm2",
+			"revision": "f7285988299d7a6134f9df1d592e9cbbe8c8d977",
+			"revisionTime": "2020-06-28T08:41:44Z"
+		},
+		{
+			"checksumSHA1": "QTmBDuk3mvn+u2VzqqCi5gjfMZ4=",
+			"path": "github.com/tjfoc/gmsm/sm3",
+			"revision": "f7285988299d7a6134f9df1d592e9cbbe8c8d977",
+			"revisionTime": "2020-06-28T08:41:44Z"
+		},
+		{
+			"checksumSHA1": "KeKi4cDKl25MmB6rGHMix0ftjzU=",
+			"path": "github.com/tjfoc/gmsm/sm4",
+			"revision": "f7285988299d7a6134f9df1d592e9cbbe8c8d977",
+			"revisionTime": "2020-06-28T08:41:44Z"
+		},
+		{
+			"checksumSHA1": "Eir6uhp4nT4p5Rrb33FlyR3OkBA=",
+			"path": "github.com/tjfoc/gmtls",
+			"revision": "36d0328535148fb9a0a9e6ffe8dfaaa484125295",
+			"revisionTime": "2019-12-25T09:37:45Z"
+		},
+		{
+			"checksumSHA1": "m8Oo7mMwTx6aLLf2W4pTPtJ2WNw=",
+			"path": "github.com/tjfoc/gmtls/gmcredentials",
+			"revision": "36d0328535148fb9a0a9e6ffe8dfaaa484125295",
+			"revisionTime": "2019-12-25T09:37:45Z"
+		},
+		{
+			"checksumSHA1": "jS2bag94cabqXUD3baxj6IzVWOQ=",
+			"path": "github.com/tjfoc/gmtls/gmcredentials/echo",
+			"revision": "36d0328535148fb9a0a9e6ffe8dfaaa484125295",
+			"revisionTime": "2019-12-25T09:37:45Z"
+		}
+	],
+	"rootPath": "github.com/hyperledger/fabric"
+}
