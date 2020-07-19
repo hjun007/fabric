@@ -7,7 +7,7 @@ SPDX-License-Identifier: Apache-2.0
 package api
 
 import (
-	"crypto/x509"
+	//"crypto/x509"
 	"encoding/base64"
 	"encoding/json"
 	"encoding/pem"
@@ -18,6 +18,7 @@ import (
 	cb "github.com/hyperledger/fabric-protos-go/common"
 	"github.com/hyperledger/fabric-protos-go/msp"
 	"github.com/hyperledger/fabric/gossip/common"
+	"github.com/tjfoc/gmsm/sm2"
 	"google.golang.org/grpc"
 )
 
@@ -129,7 +130,7 @@ func (pit PeerIdentityType) String() string {
 		return fmt.Sprintf("non PEM encoded identity: %s", base64Representation)
 	}
 
-	cert, _ := x509.ParseCertificate(bl.Bytes)
+	cert, _ := sm2.ParseCertificate(bl.Bytes)
 	if cert == nil {
 		return fmt.Sprintf("non x509 identity: %s", base64Representation)
 	}
