@@ -2,7 +2,7 @@ package sarama
 
 import (
 	"compress/gzip"
-	"crypto/tls"
+	//"crypto/tls"
 	"fmt"
 	"io/ioutil"
 	"net"
@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/rcrowley/go-metrics"
+	tls "github.com/tjfoc/gmtls"
 )
 
 const defaultClientID = "sarama"

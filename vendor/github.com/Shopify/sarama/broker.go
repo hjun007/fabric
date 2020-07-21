@@ -1,17 +1,17 @@
 package sarama
 
 import (
-	"crypto/tls"
+	//"crypto/tls"
 	"encoding/binary"
 	"fmt"
+	"github.com/rcrowley/go-metrics"
+	tls "github.com/tjfoc/gmtls"
 	"io"
 	"net"
 	"strconv"
 	"sync"
 	"sync/atomic"
 	"time"
-
-	"github.com/rcrowley/go-metrics"
 )
 
 // Broker represents a single Kafka broker connection. All operations on this object are entirely concurrency-safe.
