@@ -8,7 +8,7 @@ package etcdraft
 
 import (
 	"bytes"
-	"crypto/x509"
+	//"crypto/x509"
 	"encoding/pem"
 	"time"
 
@@ -22,6 +22,7 @@ import (
 	"github.com/hyperledger/fabric/orderer/common/cluster"
 	"github.com/hyperledger/fabric/protoutil"
 	"github.com/pkg/errors"
+	"github.com/tjfoc/gmsm/sm2"
 	"go.etcd.io/etcd/raft"
 	"go.etcd.io/etcd/raft/raftpb"
 )
@@ -255,7 +256,7 @@ func validateCert(pemData []byte, certRole string) error {
 		return errors.Errorf("%s TLS certificate is not PEM encoded: %s", certRole, string(pemData))
 	}
 
-	if _, err := x509.ParseCertificate(bl.Bytes); err != nil {
+	if _, err := sm2.ParseCertificate(bl.Bytes); err != nil {
 		return errors.Errorf("%s TLS certificate has invalid ASN1 structure, %v: %s", certRole, err, string(pemData))
 	}
 	return nil
