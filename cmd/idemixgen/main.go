@@ -13,7 +13,7 @@ package main
 
 import (
 	//"crypto/ecdsa"
-	//"crypto/x509"
+	"crypto/x509"
 	"encoding/pem"
 	"fmt"
 	"io/ioutil"
@@ -68,7 +68,7 @@ func main() {
 		handleError(err)
 		pemEncodedRevocationSK := pem.EncodeToMemory(&pem.Block{Type: "PRIVATE KEY", Bytes: encodedRevocationSK})
 		handleError(err)
-		encodedRevocationPK, err := sm2.MarshalPKIXPublicKey(revocationKey.Public())
+		encodedRevocationPK, err := x509.MarshalPKIXPublicKey(revocationKey.Public())
 		handleError(err)
 		pemEncodedRevocationPK := pem.EncodeToMemory(&pem.Block{Type: "PUBLIC KEY", Bytes: encodedRevocationPK})
 
