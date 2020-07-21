@@ -32,7 +32,7 @@ func (kg *gmsm2KeyGenerator) KeyGen(opts bccsp.KeyGenOpts) (bccsp.Key, error) {
 		return nil, fmt.Errorf("Failed generating GMSM2 key: [%s]", err)
 	}
 
-	return &gmsm2PrivateKey{privKey}, nil
+	return &Gmsm2PrivateKey{privKey}, nil
 }
 
 type gmsm4KeyGenerator struct {
@@ -45,5 +45,5 @@ func (kg *gmsm4KeyGenerator) KeyGen(opts bccsp.KeyGenOpts) (bccsp.Key, error) {
 		return nil, fmt.Errorf("Failed generating GMSM4 %d key [%s]", kg.length, err)
 	}
 
-	return &gmsm4PrivateKey{lowLevelKey, false}, nil
+	return &Gmsm4PrivateKey{lowLevelKey, false}, nil
 }

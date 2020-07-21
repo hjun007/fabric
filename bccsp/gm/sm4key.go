@@ -22,44 +22,44 @@ import (
 	"github.com/hyperledger/fabric/bccsp"
 )
 
-type gmsm4PrivateKey struct {
-	privKey    []byte
-	exportable bool
+type Gmsm4PrivateKey struct {
+	PrivKey    []byte
+	Exportable bool
 }
 
 // Bytes converts this key to its byte representation,
 // if this operation is allowed.
-func (k *gmsm4PrivateKey) Bytes() ([]byte, error) {
-	if k.exportable {
-		return k.privKey, nil
+func (k *Gmsm4PrivateKey) Bytes() ([]byte, error) {
+	if k.Exportable {
+		return k.PrivKey, nil
 	}
 
 	return nil, errors.New("Not supported.")
 }
 
 // SKI returns the subject key identifier of this key.
-func (k *gmsm4PrivateKey) SKI() []byte {
+func (k *Gmsm4PrivateKey) SKI() []byte {
 	hash := sha256.New()
 	// hash := NewSM3()
 	hash.Write([]byte{0x01})
-	hash.Write(k.privKey)
+	hash.Write(k.PrivKey)
 	return hash.Sum(nil)
 }
 
 // Symmetric returns true if this key is a symmetric key,
 // false if this key is asymmetric
-func (k *gmsm4PrivateKey) Symmetric() bool {
+func (k *Gmsm4PrivateKey) Symmetric() bool {
 	return true
 }
 
 // Private returns true if this key is a private key,
 // false otherwise.
-func (k *gmsm4PrivateKey) Private() bool {
+func (k *Gmsm4PrivateKey) Private() bool {
 	return true
 }
 
 // PublicKey returns the corresponding public key part of an asymmetric public/private key pair.
 // This method returns an error in symmetric key schemes.
-func (k *gmsm4PrivateKey) PublicKey() (bccsp.Key, error) {
+func (k *Gmsm4PrivateKey) PublicKey() (bccsp.Key, error) {
 	return nil, errors.New("Cannot call this method on a symmetric key.")
 }

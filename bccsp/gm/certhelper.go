@@ -57,7 +57,7 @@ import (
 
 //调用SM2接口生成SM2证书
 func CreateCertificateToMem(template, parent *sm2.Certificate, key bccsp.Key) (cert []byte, err error) {
-	pk := key.(*gmsm2PrivateKey).privKey
+	pk := key.(*Gmsm2PrivateKey).PrivKey
 
 	pub, a := template.PublicKey.(*sm2.PublicKey)
 	if a {
@@ -74,7 +74,7 @@ func CreateCertificateToMem(template, parent *sm2.Certificate, key bccsp.Key) (c
 
 //调用SM2接口生成SM2证书请求
 func CreateSm2CertificateRequestToMem(certificateRequest *sm2.CertificateRequest, key bccsp.Key) (csr []byte, err error) {
-	pk := key.(*gmsm2PrivateKey).privKey
+	pk := key.(*Gmsm2PrivateKey).PrivKey
 	csr, err = sm2.CreateCertificateRequestToMem(certificateRequest, pk)
 	return
 }
