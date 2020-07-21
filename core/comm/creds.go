@@ -102,7 +102,7 @@ func (dtc *DynamicClientCredentials) latestConfig() *tls.Config {
 	return tlsConfigCopy
 }
 
-func (dtc *DynamicClientCredentials) ClientHandshake(ctx context.Context, authority string, rawConn net.Conn) (net.Conn, gmcredentials.AuthInfo, error) {
+func (dtc *DynamicClientCredentials) ClientHandshake(ctx context.Context, authority string, rawConn net.Conn) (net.Conn, credentials.AuthInfo, error) {
 	return gmcredentials.NewTLS(dtc.latestConfig()).ClientHandshake(ctx, authority, rawConn)
 }
 

@@ -17,8 +17,8 @@ import (
 	"github.com/golang/protobuf/proto"
 	"github.com/pkg/errors"
 	"github.com/tjfoc/gmsm/sm2"
-	"github.com/tjfoc/gmtls/gmcredentials"
-	"google.golang.org/grpc/credentials"
+	credentials "github.com/tjfoc/gmtls/gmcredentials"
+	//"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/peer"
 )
 
@@ -138,7 +138,7 @@ func ExtractCertificateFromContext(ctx context.Context) *sm2.Certificate {
 		return nil
 	}
 
-	tlsInfo, isTLSConn := authInfo.(gmcredentials.TLSInfo)
+	tlsInfo, isTLSConn := authInfo.(credentials.TLSInfo)
 	if !isTLSConn {
 		return nil
 	}

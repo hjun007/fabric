@@ -12,6 +12,7 @@ import (
 	//"crypto/x509"
 	"github.com/tjfoc/gmsm/sm2"
 	tls "github.com/tjfoc/gmtls"
+	"github.com/tjfoc/gmtls/gmcredentials"
 	"time"
 
 	"github.com/pkg/errors"
