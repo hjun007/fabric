@@ -8,6 +8,7 @@ FROM alpine:${ALPINE_VER} as base
 RUN apk add --no-cache tzdata
 
 FROM golang:${GO_VER}-alpine${ALPINE_VER} as golang
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
 RUN apk add --no-cache \
 	gcc \
 	musl-dev \
