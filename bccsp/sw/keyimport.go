@@ -10,6 +10,7 @@ import (
 	"crypto/ecdsa"
 	"errors"
 	"fmt"
+	"github.com/hyperledger/fabric/bccsp/gm"
 	"reflect"
 
 	"github.com/hyperledger/fabric/bccsp"
@@ -179,7 +180,7 @@ func (*gmsm4ImportKeyOptsKeyImporter) KeyImport(raw interface{}, opts bccsp.KeyI
 		return nil, errors.New("Invalid raw material. It must not be nil.")
 	}
 
-	return &gmsm4PrivateKey{utils.Clone(sm4Raw), false}, nil
+	return &gm.Gmsm4PrivateKey{PrivKey: utils.Clone(sm4Raw)}, nil
 }
 
 type gmsm2PrivateKeyImportOptsKeyImporter struct{}
@@ -211,7 +212,7 @@ func (*gmsm2PrivateKeyImportOptsKeyImporter) KeyImport(raw interface{}, opts bcc
 		return nil, fmt.Errorf("Failed converting to GMSM2 private key [%s]", err)
 	}
 
-	return &gmsm2PrivateKey{gmsm2SK}, nil
+	return &gm.Gmsm2PrivateKey{PrivKey: gmsm2SK}, nil
 }
 
 type gmsm2PublicKeyImportOptsKeyImporter struct{}
@@ -241,5 +242,5 @@ func (*gmsm2PublicKeyImportOptsKeyImporter) KeyImport(raw interface{}, opts bccs
 		return nil, fmt.Errorf("Failed converting to GMSM2 public key [%s]", err)
 	}
 
-	return &gmsm2PublicKey{gmsm2SK}, nil
+	return &gm.Gmsm2PublicKey{PubKey: gmsm2SK}, nil
 }

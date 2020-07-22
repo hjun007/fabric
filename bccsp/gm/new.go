@@ -52,18 +52,18 @@ func NewWithParams(securityLevel int, hashFamily string, keyStore bccsp.KeyStore
 	// of the following call fails.
 
 	// Set the Encryptors
-	gmbccsp.AddWrapper(reflect.TypeOf(&Gmsm4PrivateKey{}), &gmsm4Encryptor{})
+	gmbccsp.AddWrapper(reflect.TypeOf(&Gmsm4PrivateKey{}), &Gmsm4Encryptor{})
 
 	// Set the Decryptors
-	gmbccsp.AddWrapper(reflect.TypeOf(&Gmsm4PrivateKey{}), &gmsm4Decryptor{})
+	gmbccsp.AddWrapper(reflect.TypeOf(&Gmsm4PrivateKey{}), &Gmsm4Decryptor{})
 
 	// Set the Signers
-	gmbccsp.AddWrapper(reflect.TypeOf(&Gmsm2PrivateKey{}), &gmsm2Signer{})
+	gmbccsp.AddWrapper(reflect.TypeOf(&Gmsm2PrivateKey{}), &Gmsm2Signer{})
 	gmbccsp.AddWrapper(reflect.TypeOf(&ecdsaPrivateKey{}), &ecdsaPrivateKeySigner{})
 
 	// Set the Verifiers
-	gmbccsp.AddWrapper(reflect.TypeOf(&Gmsm2PrivateKey{}), &gmsm2PrivateKeyVerifier{})
-	gmbccsp.AddWrapper(reflect.TypeOf(&Gmsm2PublicKey{}), &gmsm2PublicKeyKeyVerifier{})
+	gmbccsp.AddWrapper(reflect.TypeOf(&Gmsm2PrivateKey{}), &Gmsm2PrivateKeyVerifier{})
+	gmbccsp.AddWrapper(reflect.TypeOf(&Gmsm2PublicKey{}), &Gmsm2PublicKeyKeyVerifier{})
 	gmbccsp.AddWrapper(reflect.TypeOf(&ecdsaPrivateKey{}), &ecdsaPrivateKeyVerifier{})
 	gmbccsp.AddWrapper(reflect.TypeOf(&ecdsaPublicKey{}), &ecdsaPublicKeyKeyVerifier{})
 

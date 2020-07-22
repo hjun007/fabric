@@ -86,9 +86,9 @@ func verifyGMSM2(k *sm2.PublicKey, signature, digest []byte, opts bccsp.SignerOp
 	return
 }
 
-type gmsm2Signer struct{}
+type Gmsm2Signer struct{}
 
-func (s *gmsm2Signer) Sign(k bccsp.Key, digest []byte, opts bccsp.SignerOpts) (signature []byte, err error) {
+func (s *Gmsm2Signer) Sign(k bccsp.Key, digest []byte, opts bccsp.SignerOpts) (signature []byte, err error) {
 	return signGMSM2(k.(*Gmsm2PrivateKey).PrivKey, digest, opts)
 }
 
@@ -111,15 +111,15 @@ func (s *ecdsaPrivateKeySigner) Sign(k bccsp.Key, digest []byte, opts bccsp.Sign
 	return signGMSM2(&sm2privKey, digest, opts)
 }
 
-type gmsm2PrivateKeyVerifier struct{}
+type Gmsm2PrivateKeyVerifier struct{}
 
-func (v *gmsm2PrivateKeyVerifier) Verify(k bccsp.Key, signature, digest []byte, opts bccsp.SignerOpts) (valid bool, err error) {
+func (v *Gmsm2PrivateKeyVerifier) Verify(k bccsp.Key, signature, digest []byte, opts bccsp.SignerOpts) (valid bool, err error) {
 	return verifyGMSM2(&(k.(*Gmsm2PrivateKey).PrivKey.PublicKey), signature, digest, opts)
 }
 
-type gmsm2PublicKeyKeyVerifier struct{}
+type Gmsm2PublicKeyKeyVerifier struct{}
 
-func (v *gmsm2PublicKeyKeyVerifier) Verify(k bccsp.Key, signature, digest []byte, opts bccsp.SignerOpts) (valid bool, err error) {
+func (v *Gmsm2PublicKeyKeyVerifier) Verify(k bccsp.Key, signature, digest []byte, opts bccsp.SignerOpts) (valid bool, err error) {
 	return verifyGMSM2(k.(*Gmsm2PublicKey).PubKey, signature, digest, opts)
 }
 
